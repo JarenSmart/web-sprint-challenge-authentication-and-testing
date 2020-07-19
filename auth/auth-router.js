@@ -1,8 +1,12 @@
+const Users = require("./auth-model");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
 const router = require("express").Router();
 
-router.post("/api/register", async (req, res, next) => {
+router.post("/register", async (req, res, next) => {
   try {
-    const { username, password, department } = req.body;
+    const { username, password } = req.body;
     const user = await Users.findBy({ username }).first();
 
     if (user) {
@@ -14,7 +18,6 @@ router.post("/api/register", async (req, res, next) => {
     const newUser = await Users.add({
       username,
       password: await bcrypt.hash(password, 14),
-      department,
     });
 
     res.status(201).json(newUser);
@@ -23,7 +26,7 @@ router.post("/api/register", async (req, res, next) => {
   }
 });
 
-router.post("/api/login", async (req, res, next) => {
+router.post("/login", async (req, res, next) => {
   try {
     const { username, password } = req.body;
     const user = await Users.findBy({ username }).first();
