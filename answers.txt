@@ -1,0 +1,15 @@
+1. Differences between using _sessions_ or _JSON Web Tokens_ for authentication.
+    - JWT are stateless and take up less resources, making them more scalable
+    - JWT have signatures that are encrypted
+    - JWT have authentication access across multiple locations, while sessions work across a single-domain
+
+2. What does `bcrypt` do to help us store passwords in a secure manner.
+    - it takes what would be a 'string' password and hashes it into a cyrptic string of letters and numbers making it more difficult to guess
+
+3. How are unit tests different from integration and end-to-end testing.
+    - Unit tests are tests that are between individual points that stand alone without integration or dependencies
+    - Integration tests focus on testing modules that work together as one, or have multiple points that connect on the way to the end product 
+
+4. How _Test Driven Development_ changes the way we write applications and tests.
+    - It allows us to program based on circumstances that we want checked and implemented. This allows us to write more programmitcally
+        driven code. 

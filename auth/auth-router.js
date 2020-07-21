@@ -1,8 +1,9 @@
+const express = require("express");
+const jwt = require("jsonwebtoken");
 const Users = require("./auth-model");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
-const router = require("express").Router();
+const router = express.Router();
 
 router.post("/register", async (req, res, next) => {
   try {
@@ -32,6 +33,7 @@ router.post("/login", async (req, res, next) => {
     const user = await Users.findBy({ username }).first();
 
     if (!user) {
+      console.log("no user");
       return res.status(401).json({
         message: "You shall not pass!",
       });
@@ -40,6 +42,7 @@ router.post("/login", async (req, res, next) => {
     const passwordValid = await bcrypt.compare(password, user.password);
 
     if (!passwordValid) {
+      console.log("no password");
       return res.status(401).json({
         message: "You shall not pass!",
       });
@@ -53,9 +56,10 @@ router.post("/login", async (req, res, next) => {
 
     res.json({
       message: `Welcome ${user.username}!`,
-      token: jwt.sign(tokenPayload, process.env.JWT_SECRET),
+      token: jwt.sign(tokenPayload, process.env.JWT_SECRET || "secret"),
     });
   } catch (err) {
+    console.log("catch", err);
     next(err);
   }
 });
